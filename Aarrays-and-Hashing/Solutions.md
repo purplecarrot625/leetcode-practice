@@ -78,3 +78,32 @@ class Solution:
         
         return result.values() # 注意这是values
 ```
+
+## Top K frequent elements
+
+假设我们有数组 [1,1,1,2,2,2,100],如果我们想存频率，首先想到的可能是开一个数组count，数字的值对应index，也就是说，对于上述情况，我们的count数组要到100.  
+为了解决这个问题，我们换一种角度: 
+index 表示出现的频率  
+value 表示该频率都有哪些值，是个数组
+<img src='1.png'>
+
+```python
+
+count = {}
+freq = [[] for i in range(len(nums) + 1)]
+
+for n in nums:
+    count[n] = count.get(n,0) + 1
+for n,c in count.items():
+    freq[c].append(n) # n occurs c times
+res = []
+
+# descending order
+for i in range(len(freq) - 1, 0 , -1):
+    for n in freq[i]:
+        res.append(n)
+        if len(res) == k:
+            return res
+```
+
+💡注意我们要降序找
