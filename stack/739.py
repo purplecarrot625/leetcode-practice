@@ -10,3 +10,4 @@ class Solution:
             stack.append([t,i])
         return res
     
+    # stack[-1][0]:我们要栈顶元素，and temperature是每个[temp, index]的第一个元素,所以是0
