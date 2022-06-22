@@ -3,7 +3,7 @@
 
 解题思路：  
 **monolistic decreasing stack**
-<img src='739.png'>
+<img src='739.png' width="400px">
 
 ``` python
 class Solution:

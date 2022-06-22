@@ -133,3 +133,40 @@ class Solution:
     
     # stack[-1][0]:我们要栈顶元素，and temperature是每个[temp, index]的第一个元素,所以是0
 ```
+
+# 143. Reorder List
+
+首先找到middle    
+``` python
+        # find middle
+        slow, fast = head, head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        l2 = slow.next
+```
+然后翻转后半个list    
+``` python
+   
+        # reverse the second list
+        prev = slow.next = None
+        while l2:
+            temp = l2.next
+            l2.next = prev
+            prev = l2
+            l2 = temp
+```
+最后merge两个list
+``` python
+# merge two list
+        l1, l2 = head, prev
+        while l2:
+            temp1 = l1.next
+            temp2 = l2.next
+            
+            l1.next = l2
+            l2.next = temp1
+            
+            l1 = temp1
+            l2 = temp2
+```
