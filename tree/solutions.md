@@ -41,3 +41,24 @@ return root
         return level
 ```
 
+# 102 BFS 模板
+
+``` python
+q = deque()
+
+while q:
+    val = []
+    for i in range(len(q)):
+        node = q.popleft()
+        val.append(node.val)
+
+        if node.left:
+            q.append(node.left)
+        if node.right:
+            q.appenf(node.right)
+    res.append(val)
+    
+return res
+```
+
+# 199. Binary Tree Right Side View

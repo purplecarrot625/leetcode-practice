@@ -143,4 +143,27 @@ class Solution(object):
         return False
 ```
 
-#287 Find the Duplicate Number
+# 287 Find the Duplicate Number
+# 238. Product of Array Except Self
+
+解法:  
+<img src='238.jpeg' width = 400px>
+
+``` python 
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        res = [1]* len(nums)
+        
+        prefix = 1
+        for i in range(len(nums)):
+            res[i] = prefix
+            prefix *= nums[i]
+        
+        postfix = 1
+        for i in range(len(nums) - 1, -1, -1):
+            res[i] *= postfix
+            postfix *= nums[i]
+        return res
+            
+            
+```
