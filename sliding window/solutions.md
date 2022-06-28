@@ -5,7 +5,7 @@
 - 使用count（hash）来保存每个字母的出现频率，记录最高的次数
 - 使用left，right来实现window，用循环更新right，而left的更新条件是：right-left+1-max_frequency的值大于k，意味着需要被替换的字母数已经超过了规定，我们需要移动left来缩小窗口
 - res保留最大的长度
-<img src = '424.png' width = '400px'>
+<img src = '424.png' width = '500px'>
 
 ``` python
 class Solution:
