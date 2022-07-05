@@ -62,3 +62,47 @@ return res
 ```
 
 # 199. Binary Tree Right Side View
+ 用bfs
+ rightSide保存了这一层最后一个遍历到达节点
+
+``` python
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        q = deque([root])
+        
+        while q:
+            rightSide = None
+            qLen = len(q)
+            for i in range(qLen):
+                node = q.popleft()
+                if node:
+                    rightSide = node
+                    q.append(node.left)
+                    q.append(node.right)
+            if rightSide:
+                res.append(rightSide.val)
+        return res
+```
+
+# 1448. Count Good Nodes in Binary Tree
+*Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+
+Return the number of good nodes in the binary tree.*
+
+## dfs 模板
+实时记录每条路中的最大值，用dfs遍历，如果是good:也就是说node的值大于当前最大值,则result+1,即return 1, 相反return 0
+``` python
+class Solution:
+    def goodNodes(self, root: TreeNode) -> int:
+        def dfs(node, maxVal):
+            if not node:
+                return 0
+        
+            res = 1 if node.val >= maxVal else 0
+            maxVal = max(maxVal, node.val)
+            res += dfs(node.left, maxVal)
+            res += dfs(node.right, maxVal)
+            return res
+        return dfs(root, root.val)
+  ```                      
