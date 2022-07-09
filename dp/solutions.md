@@ -138,3 +138,24 @@ class Solution:
                 dp[i] += dp[i + 2]
         return dp[0]
 ```
+
+# 322.coin chaning
+
+``` python
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        
+        dp = [amount+1]*(amount+1) # amount+1 or infinity okay!
+        dp[0] = 0
+        
+        for a in range(1, amount + 1): # every amount
+            for i in coins: # coins
+                if a - i >= 0:
+                    dp[a] = min(dp[a], 1 + dp[a - i]) #update the minimum coins of dp[a]
+        return dp[amount] if dp[amount] != amount + 1 else -1
+
+```
+
+# 152. Maximum Product Subarray
+注意:  subarray要是连续的  
+我们只需要在维护一个局部最大的同时，在维护一个局部最小，这样如果下一个元素遇到负数时，就有可能与这个最小相乘得到当前最大的乘积和
