@@ -3,6 +3,11 @@
 ## 242. Valid Anagram
 ### 注意：
 * 这个不是反转列表！这个问题是rearrange
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+
 
 ### 😍 Solution 1: Sort the two Strings.
 
@@ -54,6 +59,13 @@ class Solution:
 
 
 ## Group Anagrams
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.  
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+
 O(mn) m is the number of input strings, n is the average length of each string
 
 * 如何判断是一组的？
@@ -68,17 +80,32 @@ O(mn) m is the number of input strings, n is the average length of each string
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         
-        result = collections.defaultdict(list) # 当key不存在时生成默认的，防止出错
+        result = collections.defaultdict(list) # 当key不存在时生成默认的，防止出错, mapping charCount to list of Anagrams
         
         for s in strs:
-            count = [0] * 26
-            for c in s:
+            count = [0] * 26 # count how many characters we have
+            for c in s: # go through every single charater in each string, and count
                 count[ord(c) - ord('a')] += 1 #把'a' map到index 0
             result[tuple(count)].append(s) # python中list不能当作key，所以把list转成tuple
         
         return result.values() # 注意这是values
 ```
+O(m*n)
+26* (n->average length of each string)
+So, O(n)
+* dict存储结果，key对应于字符列表，value对应多个组成字符相同的字符串的列表。例如，res = {['a','e','t']: ['tea', 'eat']}
 
+Another Solution:
+``` python
+    res = {}
+    for str in strs:
+    l = tuple(sorted(str))
+    if l not in res.keys():
+        res[tuple(l)] = [str]
+    else:
+        res[tuple(l)].append(str)
+    return res.values()
+```
 ## Top K frequent elements
 
 假设我们有数组 [1,1,1,2,2,2,100],如果我们想存频率，首先想到的可能是开一个数组count，数字的值对应index，也就是说，对于上述情况，我们的count数组要到100.  
