@@ -194,3 +194,20 @@ class Solution:
             
             
 ```
+
+# 128. Longest Consecutive Sequence
+
+``` python
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        numSet = set(nums) # hash
+        longest = 0
+        for n in nums: # for all the elements
+            if (n-1) not in numSet:# 如果不在hash里面, check if itis the starting element
+                length = 1
+                while (n+length) in numSet:# check the next element
+                    length += 1
+                longest = max(length, longest) # update length
+        return longest
+
+```
