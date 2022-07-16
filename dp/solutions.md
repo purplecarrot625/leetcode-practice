@@ -158,4 +158,28 @@ class Solution:
 
 # 152. Maximum Product Subarray
 注意:  subarray要是连续的  
-我们只需要在维护一个局部最大的同时，在维护一个局部最小，这样如果下一个元素遇到负数时，就有可能与这个最小相乘得到当前最大的乘积和
+我们只需要在维护一个局部最大的同时，在维护一个局部最小，这样如果下一个元素遇到负数时，就有可能与这个最小相乘得到当前最大的乘积
+
+In this problem, we would use two variables to maintain the curMax and curMin, because  
+For arrays that contain all positive numbers, wre just use a curMax to maintain the max value, but in an array that contains all negative values, we will get a larger number as well for cases which is one negative number multiply by another negative number, so we need a curMin to maintain the minimum number.  
+For example, (-3) * (-4) = 12!  
+One edge case os that we don't want to handle 0 case, because it will kill our products.  
+So we are going to iterate through every single number in our input array, and keep updating the curMax and curMin.  
+updating curMax: max(curMax, curMin, n)  
+updating curMin: min(curMax, curMin, n) 
+
+``` python
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        # maintaining two values:curMax, curMin
+        # Edge case: 0, we don't wanna handle this edge case because this gonna kill our product
+        curMax = 1
+        curMin = 1 # neutral value
+        result = max(nums)
+        for n in nums:
+            tmp = curMax
+            curMax = max(curMax * n, curMin * n, n)
+            curMin = min(tmp * n, curMin * n, n)
+            result = max(result, curMax)
+        return result
+```
