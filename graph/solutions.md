@@ -110,3 +110,49 @@ class Solution(object):
                 area = max(area, dfs(row, col))
         return area
 ```
+
+# 417. Pacific Atlantic Water Flow
+他不是判断哪些岛能够通向海，而是看海能通向哪些海岛，这样做的好处是：
+
+```python
+class Solution(object):
+    def pacificAtlantic(self, heights):
+        """
+        :type heights: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        
+        # initializing
+        ROWS = len(heights)
+        COLS = len(heights[0])
+        pac, atl = set(), set()
+        # define dfs
+        def dfs(row, col, visited, prevHeight): # visited 便于复用，直接传参数
+            # meet the requirements
+            if(row < 0 or row == ROWS or col < 0 or col == COLS or (row, col) in visited or heights[row][col] < prevHeight):
+                return 
+            # update visited
+            visited.add((row, col))
+            # dfs recursive
+            dfs(row + 1, col, visited, heights[row][col])
+            dfs(row - 1, col, visited, heights[row][col])
+            dfs(row, col + 1, visited, heights[row][col])
+            dfs(row, col - 1, visited, heights[row][col])
+        
+        # first col and first col - pacific ocean
+        for c in range(COLS):
+            dfs(0, c, pac, heights[0][c])
+            dfs(ROWS - 1, c, atl, heights[ROWS - 1][c])
+        # last row and last col - atlantic ocean
+        for r in range(ROWS):
+            dfs(r, 0, pac, heights[r][0])
+            dfs(r, COLS - 1, atl, heights[r][COLS - 1])
+        # traverse all the points to see if it is in both pac and atlantic ocean..
+        res = []
+        for r in range(ROWS):
+            for c in range(COLS):
+                if(r, c) in pac and (r, c) in atl:
+                    res.append((r, c))
+        return res
+
+```
