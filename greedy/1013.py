@@ -1,9 +1,3 @@
-# 45. Jump Game 2 😍
-Actually, I don't think this is a greedy solution...
-
-# 1013.Partition Array Into Three Parts With Equal Sum
-
-```python
 class Solution(object):
     def canThreePartsEqualSum(self, arr):
         """
@@ -35,4 +29,3 @@ class Solution(object):
             return True
         else:
             return False
-```

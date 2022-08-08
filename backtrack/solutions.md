@@ -1,3 +1,4 @@
+
 # 77. Combinations
 典型的backtrack题
 ``` python
@@ -27,7 +28,20 @@ class Solution(object):
 
 ```
 
-# 46. Permutations
+# 46. Permutations 全排列
+
+框架:  
+``` python
+    res = []
+    def backtrack(路径, 选择列表):
+        if 满足结束条件:
+            res.add(路径)
+            return
+        for 选择 in 选择列表:
+            做选择
+            backtrack(路径, 选择列表)
+            撤销选择
+```
 ``` python
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
@@ -46,3 +60,33 @@ class Solution:
             nums.append(n) # 接下来还要用 1, and nums[1,2,3] 变成了 [2,3,1], pop(0)就该pop出2了
         return res
 ```
+
+# 78. Subsets
+ backtrack要我老命  
+这个代码适合框架
+ <img src='78.png' width = 400px>
+
+ ```python
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """     
+        res, tmp = [], []
+        
+        def generate(nums, n):
+            res.append(tmp[:])
+            
+            if n == len(nums):
+                return 
+            for i in range(n, len(nums)):
+                tmp.append(nums[i])
+                n += 1
+                generate(nums, n)
+                tmp.pop()
+                
+        generate(nums, 0)
+        return res
+
+ ```

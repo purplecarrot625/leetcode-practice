@@ -106,3 +106,73 @@ class Solution:
             return res
         return dfs(root, root.val)
   ```                      
+
+
+  # 105. Construct Binary Tree from Preorder and Inorder Traversal
+
+  ``` python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        
+        if not preorder or not inorder:
+            return None
+        
+        #根结点是前序遍历的第一个点
+        rootVal = preorder[0]
+        root = TreeNode(rootVal)
+        
+        midIndex = inorder.index(rootVal) # 根结点的值找元素下标
+        
+        # 中序遍历左子树：【0，midindex】，右子树：【midindex+1，n-1】
+        inorderLeft = inorder[:midIndex]
+        inorderRight = inorder[midIndex + 1:]
+        
+        # 前序遍历和中序遍历左右子树长度相等
+        preorderLeft = preorder[1:len(inorderLeft) + 1]
+        preorderRight = preorder[len(inorderLeft) + 1:]
+        
+        # 递归遍历左右子树
+        root.left = self.buildTree(preorderLeft, inorderLeft)
+        root.right = self.buildTree(preorderRight, inorderRight)
+        
+        return root
+  ```
+
+# 98. Validate Binary Search Tree
+  ```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def valid(node, left, right):
+            # 空的树仍然是一个binary search tree
+            if not node:
+                return True
+            
+            # break the rules, return False
+            if not (node.val < right and node.val > left):
+                return False
+            
+            # 因为左孩子的value小于当前父值，所以右界更新为当前父值; 右孩子的value大于当前父值，所以左界更新为当前父值
+            return (valid(node.left, left, node.val) and valid(node.right, node.val, right))
+        return valid(root, float("-inf"), float("inf"))
+  ```

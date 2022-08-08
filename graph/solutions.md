@@ -191,3 +191,42 @@ class Solution(object):
                     
     
 ```
+
+# 79. Word Search
+
+``` python
+class Solution(object):
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        # dfs
+        row = len(board)
+        col = len(board[0])
+        path = set()
+        def dfs(r, c, i):
+            if i == len(word):
+                return True
+            if(r < 0 or c < 0 or r >= row or c >= col or board[r][c] != word[i] or (r, c) in path): # 6!
+                return False
+            path.add((r, c))
+            res =(
+                dfs(r + 1, c, i + 1) or
+                dfs(r - 1, c, i + 1) or
+                dfs(r, c + 1, i + 1) or
+                dfs(r, c - 1, i + 1)
+            )
+            path.remove((r, c)) # 注意这里  为什么要remove？
+            return res
+        for r in range(row):
+            for c in range(col):
+                if dfs(r, c, 0):
+                    return True
+        return False
+
+```
+如果把remove去掉, 出现如下:
+<img src='79-1.png' width = 200px>  
+我想着应该是以该点为起点进行dfs的时候，如果不存在一条路径，那么要把这个点从path中删除，可以当作别的路径的中间点来用，所以把它remove掉，这也是在图里寻找路径（有序）于岛屿（无序）的区别
