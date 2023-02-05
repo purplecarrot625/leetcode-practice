@@ -227,6 +227,8 @@ class Solution(object):
         return False
 
 ```
-如果把remove去掉, 出现如下:
-<img src='79-1.png' width = 200px>  
+如果把remove去掉, 出现如下:  
+
+<img src='79-1.png' width = 200px>   
+ 
 我想着应该是以该点为起点进行dfs的时候，如果不存在一条路径，那么要把这个点从path中删除，可以当作别的路径的中间点来用，所以把它remove掉，这也是在图里寻找路径（有序）于岛屿（无序）的区别
